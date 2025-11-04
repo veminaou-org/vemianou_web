@@ -26,7 +26,11 @@
   },
   "devDependencies": {
     "@nuxtjs/tailwindcss": "^6.14.0",
+    "@typescript-eslint/eslint-plugin": "^8.46.3",
+    "@typescript-eslint/parser": "^8.46.3",
     "husky": "^9.1.7",
-    "lint-staged": "^16.2.6"
+    "lint-staged": "^16.2.6",
+    "typescript": "^5.9.3",
+    "vue-tsc": "^3.1.3"
   }
 }
