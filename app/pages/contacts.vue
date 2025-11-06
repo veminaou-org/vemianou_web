@@ -1,13 +1,19 @@
 <template>
-  <div class="min-h-screen bg-gray-background">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-      <h1 class="text-4xl font-bold text-primary mb-6">
-        Contacts
-      </h1>
-      <p class="text-lg text-gray-text">
-        Page contacts en construction...
-      </p>
-    </div>
+  <div>
+    <!-- Hero Section -->
+    <ContactHero />
+
+    <!-- Contact Section -->
+    <section class="bg-white py-16 px-8 md:px-12 lg:w-3/4 mx-auto">
+      <div class="max-w-7xl mx-auto">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-20">
+          <!-- Left Column - Contact Info -->
+          <ContactInfo />
+
+          <!-- Right Column - Contact Form -->
+          <ContactForm />
+        </div>
+      </div>
+    </section>
   </div>
 </template>
-
