@@ -17,6 +17,7 @@ export default {
         },
         secondary: '#D6140B',
         black: '#090914',
+        'black-background': '#282828',
         'gray-text': '#18181B',
         'gray-background': '#EEEEEE',
       },
