@@ -24,7 +24,7 @@
 </script>
 
 <template>
-  <section class="bg-[#282828] py-16 px-8 md:px-12 lg:px-20">
+  <section id="actions" class="bg-[#282828] py-16 px-8 md:px-12 lg:px-20">
     <div class="max-w-7xl mx-auto">
 
       <!-- Title -->

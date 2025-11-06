@@ -8,7 +8,7 @@ const mobileMenuOpen = ref(false)
 const navItems = [
   { name: 'Accueil', path: '/' },
   { name: 'A propos', path: '/#a-propos' },
-  { name: 'Articles', path: '/articles' },
+  { name: 'Articles', path: '/#articles' },
   { name: 'Galerie', path: '/gallery' },
   { name: 'Contacts', path: '/contacts' }
 ]

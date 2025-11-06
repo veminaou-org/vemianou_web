@@ -34,7 +34,7 @@
             <!-- Text container -->
             <div class="flex flex-col gap-12">
                 <div class="flex flex-col gap-4">
-                    <h5 class="text-primary text-2xl font-bold">Notre Association</h5>
+                    <h2 class="text-primary text-2xl font-bold">Notre Association</h2>
                     <p class="text-3xl font-bold md:text-5xl">Association <br> Vémianou</p>
                     <div class="flex gap-1">
                         <div class="w-2 h-1 bg-primary"/>

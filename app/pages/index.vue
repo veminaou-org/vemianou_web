@@ -9,5 +9,8 @@
       <MissionVision />
       <Actions />
     </section>
+
+    <!-- Section Articles -->
+    <ArticleGrid />
   </div>
 </template>
