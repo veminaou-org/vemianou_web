@@ -1,0 +1,21 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800;900&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --primary: #043EE7;
+    --primary-light: #22ACEC;
+    --secondary: #D6140B;
+    --black: #090914;
+    --gray-text: #18181B;
+    --gray-background: #EEEEEE;
+  }
+
+  body {
+    font-family: 'Montserrat', sans-serif;
+  }
+}
+
