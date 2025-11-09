@@ -1,13 +1,5 @@
 <script setup lang="ts">
-interface Article {
-  id: number
-  image: string
-  author: string
-  date: string
-  title: string
-  description: string
-  slug: string
-}
+import type { Article } from '~/types';
 
 defineProps<{
   article: Article
@@ -19,17 +11,17 @@ defineProps<{
         <!-- Image -->
         <div class="w-full h-48 overflow-hidden">
             <img 
-            :src="article.image" 
+            :src="article.cover.url" 
             :alt="article.title"
             class="w-full h-full rounded-lg object-cover hover:scale-105 transition-transform duration-300"
             >
         </div>
 
         <!-- Content -->
-        <div class="p-6">
+        <div class="py-6">
             <!-- Author and Date -->
             <p class="text-primary text-sm mb-3">
-                {{ article.author }} - {{ article.date }}
+                {{ article.author }} - {{ article.createdAt }}
             </p>
 
             <!-- Title -->
@@ -38,7 +30,7 @@ defineProps<{
             </h3>
 
             <!-- Description -->
-            <p class="text-gray-text text-sm mb-4 line-clamp-3 leading-relaxed">
+            <p class="text-gray-text text-sm mb-4 line-clamp-1 leading-relaxed">
                 {{ article.description }}
             </p>
 

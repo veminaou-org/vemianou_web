@@ -1,112 +1,135 @@
 <script setup lang="ts">
-const articles = [
-  {
-    id: 1,
-    image: '/images/gallery/image1.png',
-    author: 'Irène de SOUZA',
-    date: '15 Oct 2024',
-    title: 'Journée de sensibilisation à l\'éducation des filles',
-    description: 'Retour sur notre journée de sensibilisation dans les écoles publiques de Lomé pour promouvoir l\'éducation des filles et lutter contre les abandons scolaires.',
-    slug: 'journee-sensibilisation-education-filles'
-  },
-  {
-    id: 2,
-    image: '/images/gallery/image2.png',
-    author: 'Association VEMIANOU',
-    date: '8 Oct 2024',
-    title: 'Distribution de dons aux familles en difficulté',
-    description: 'Notre association a organisé une distribution de vivres et de matériel scolaire aux familles défavorisées dans la région de Kara.',
-    slug: 'distribution-dons-familles'
-  },
-  {
-    id: 3,
-    image: '/images/gallery/image3.png',
-    author: 'Équipe VEMIANOU',
-    date: '1 Oct 2024',
-    title: 'Forum sur la paix et la cohésion sociale',
-    description: 'Plus de 200 participants ont assisté à notre forum sur la paix, l\'unité et le vivre-ensemble à Sokodé.',
-    slug: 'forum-paix-cohesion-sociale'
-  },
-  {
-    id: 4,
-    image: '/images/gallery/image1.png',
-    author: 'Irène de SOUZA',
-    date: '25 Sep 2024',
-    title: 'Formation des jeunes aux valeurs citoyennes',
-    description: 'Lancement de notre programme de formation des jeunes leaders aux valeurs de paix, de tolérance et de fraternité.',
-    slug: 'formation-jeunes-valeurs-citoyennes'
-  },
-  {
-    id: 5,
-    image: '/images/gallery/image2.png',
-    author: 'Association VEMIANOU',
-    date: '18 Sep 2024',
-    title: 'Événement culturel : célébration de la diversité togolaise',
-    description: 'Un événement culturel réussi avec des danses, chants et expositions mettant en valeur la richesse culturelle du Togo.',
-    slug: 'evenement-culturel-diversite-togolaise'
-  },
-  {
-    id: 6,
-    image: '/images/gallery/image3.png',
-    author: 'Équipe VEMIANOU',
-    date: '10 Sep 2024',
-    title: 'Campagne de sensibilisation contre la violence',
-    description: 'Notre campagne de sensibilisation contre la violence et pour la résolution pacifique des conflits a touché plus de 500 personnes.',
-    slug: 'campagne-sensibilisation-contre-violence'
+import { computed, ref } from 'vue'
+import type { Article } from '~/types'
+
+interface StrapiPagination {
+  page: number
+  pageSize: number
+  pageCount: number
+  total: number
+}
+
+interface StrapiFindResponse<T> {
+  data: T[]
+  meta: {
+    pagination: StrapiPagination
   }
-]
+}
+
+const PAGE_SIZE = 9
+
+const currentPage = ref(1)
+
+const { find } = useStrapi()
+
+const { data: response, pending } = await useAsyncData<StrapiFindResponse<Article>>(
+  'articles-list',
+  async () => {
+    const result = await find<Article>('articles', {
+      populate: ['cover'],
+      sort: ['publishedAt:desc'],
+      pagination: {
+        page: currentPage.value,
+        pageSize: PAGE_SIZE,
+      },
+    })
+
+    return result as StrapiFindResponse<Article>
+  },
+  {
+    watch: [currentPage],
+    default: () => ({
+      data: [],
+      meta: {
+        pagination: {
+          page: 1,
+          pageSize: PAGE_SIZE,
+          pageCount: 1,
+          total: 0,
+        },
+      },
+    }),
+  },
+)
+
+const articles = computed(() => response.value?.data ?? [])
+const pagination = computed(() => response.value?.meta?.pagination)
+
+const totalPages = computed(() => pagination.value?.pageCount ?? 1)
+const totalItems = computed(() => pagination.value?.total ?? 0)
+
+const pages = computed(() =>
+  Array.from({ length: totalPages.value }, (_, index) => index + 1),
+)
+
+const changePage = (page: number) => {
+  if (page < 1 || page > totalPages.value || page === currentPage.value) {
+    return
+  }
+
+  currentPage.value = page
+}
 </script>
 
 <template>
   <section id="articles" class="bg-white py-16 px-8 lg:px-0 lg:w-4/5 mx-auto">
     <div class="max-w-7xl mx-auto">
-      <!-- Title -->
       <h2 class="text-3xl font-bold text-gray-text mb-12">
         Articles
       </h2>
 
-      <!-- Articles Grid -->
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
         <ArticleCard 
           v-for="article in articles"
           :key="article.id"
           :article="article"
         />
+
+        <div
+          v-if="!articles.length && !pending"
+          class="col-span-full text-center text-gray-500"
+        >
+          Aucun article disponible pour le moment.
+        </div>
+
+        <div
+          v-if="pending"
+          class="col-span-full flex justify-center"
+        >
+          <span class="text-gray-400 text-sm">Chargement des articles…</span>
+        </div>
       </div>
 
-      <!-- Pagination -->
-      <div class="flex justify-center items-center gap-3">
-        <!-- Page 1 (Active) -->
-        <button class="w-10 h-10 rounded-lg bg-red-200 text-primary font-semibold">
-          1
+      <div
+        v-if="totalItems > PAGE_SIZE"
+        class="flex justify-center items-center gap-2"
+      >
+        <button
+          class="px-3 py-2 text-sm rounded-lg border border-gray-200 text-gray-600 hover:text-primary hover:border-primary transition-colors disabled:opacity-40 disabled:hover:text-gray-600 disabled:hover:border-gray-200"
+          :disabled="currentPage === 1"
+          @click="changePage(currentPage - 1)"
+        >
+          Précédent
         </button>
-        
-        <!-- Page 2 -->
-        <button class="text-gray-text hover:text-primary transition-colors font-medium">
-          2
+
+        <button
+          v-for="page in pages"
+          :key="page"
+          class="w-10 h-10 rounded-lg font-semibold transition-colors"
+          :class="page === currentPage
+            ? 'bg-primary text-white'
+            : 'text-gray-text hover:text-primary hover:bg-primary/10'"
+          @click="changePage(page)"
+        >
+          {{ page }}
         </button>
-        
-        <!-- Page 3 -->
-        <button class="text-gray-text hover:text-primary transition-colors font-medium">
-          3
-        </button>
-        
-        <!-- Ellipsis -->
-        <span class="text-gray-text">...</span>
-        
-        <!-- Page 8 -->
-        <button class="text-gray-text hover:text-primary transition-colors font-medium">
-          8
-        </button>
-        
-        <!-- Page 9 -->
-        <button class="text-gray-text hover:text-primary transition-colors font-medium">
-          9
-        </button>
-        
-        <!-- Page 10 -->
-        <button class="text-gray-text hover:text-primary transition-colors font-medium">
-          10
+
+        <button
+          class="px-3 py-2 text-sm rounded-lg border border-gray-200 text-gray-600 hover:text-primary hover:border-primary transition-colors disabled:opacity-40 disabled:hover:text-gray-600 disabled:hover:border-gray-200"
+          :disabled="currentPage === totalPages"
+          @click="changePage(currentPage + 1)"
+        >
+          Suivant
         </button>
       </div>
     </div>
