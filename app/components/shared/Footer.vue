@@ -8,8 +8,8 @@
   ]
 
   const legalLinks = [
-    { name: 'Conditions d\'utilisation', path: '/conditions' },
-    { name: 'Politique de confidentialité', path: '/confidentialite' }
+    { name: 'Conditions d\'utilisation', path: '/terms-of-use' },
+    { name: 'Politique de confidentialité', path: '/privacy-policy' }
   ]
 
   const resourcesLinks = [
