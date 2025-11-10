@@ -146,10 +146,10 @@ onUnmounted(() => {
 
     <!-- Navigation Buttons -->
     <button
-      class="absolute left-4 top-1/2 -translate-y-1/2 z-20 w-12 h-12 rounded-lg border-2 border-white bg-transparent hover:bg-white hover:bg-opacity-20 transition-all duration-200 flex items-center justify-center group"
+      class="hidden md:flex absolute mx-6 left-4 top-1/2 -translate-y-1/2 z-20 w-12 h-12 rounded-lg border-2 border-white bg-transparent hover:bg-white hover:bg-opacity-20 transition-all duration-200 items-center justify-center group"
       aria-label="Image précédente"
       @click="handlePrev"
-    >
+      >
       <Icon 
         name="mdi:chevron-left" 
         class="w-8 h-8 text-white"
@@ -157,7 +157,7 @@ onUnmounted(() => {
     </button>
 
     <button
-      class="absolute right-4 top-1/2 -translate-y-1/2 z-20 w-12 h-12 rounded-lg border-2 border-white bg-transparent hover:bg-white hover:bg-opacity-20 transition-all duration-200 flex items-center justify-center group"
+      class="hidden md:flex absolute mx-6 right-4 top-1/2 -translate-y-1/2 z-20 w-12 h-12 rounded-lg border-2 border-white bg-transparent hover:bg-white hover:bg-opacity-20 transition-all duration-200 items-center justify-center group"
       aria-label="Image suivante"
       @click="handleNext"
     >
