@@ -1,3 +1,15 @@
+<script setup lang="ts">
+import { usePageSeo } from '~/composables/usePageSeo'
+
+usePageSeo({
+  title: 'Politique de confidentialité',
+  description:
+    "Découvrez la politique de confidentialité de l’Association Vémianou, la collecte des données personnelles et vos droits conformément au RGPD.",
+  ogType: 'article',
+  index: false,
+})
+</script>
+
 <template>
   <div class="bg-white py-16 px-6 md:px-12 lg:px-24">
     <div class="max-w-4xl mx-auto space-y-10">

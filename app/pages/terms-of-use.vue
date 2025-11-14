@@ -1,3 +1,15 @@
+<script setup lang="ts">
+import { usePageSeo } from '~/composables/usePageSeo'
+
+usePageSeo({
+  title: "Conditions d’utilisation",
+  description:
+    "Consultez les conditions d’utilisation du site de l’Association Vémianou et découvrez le cadre d’accès, de propriété intellectuelle et de responsabilité.",
+  ogType: 'article',
+  index: false,
+})
+</script>
+
 <template>
   <div class="bg-white py-16 px-6 md:px-12 lg:px-24">
     <div class="max-w-4xl mx-auto space-y-10">
