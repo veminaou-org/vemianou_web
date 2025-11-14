@@ -1,3 +1,14 @@
+<script setup lang="ts">
+import { usePageSeo } from '~/composables/usePageSeo'
+
+usePageSeo({
+  title: 'Contact',
+  description:
+    "Contactez l’Association Vémianou pour en savoir plus sur ses actions de sensibilisation et ses projets solidaires au Togo.",
+  ogType: 'website',
+})
+</script>
+
 <template>
   <div>
     <!-- Hero Section -->
