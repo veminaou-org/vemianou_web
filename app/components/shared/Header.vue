@@ -1,8 +1,9 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-import { useRoute } from 'vue-router'
+import { useRoute, useRouter } from 'vue-router'
 
 const route = useRoute()
+const router = useRouter()
 const mobileMenuOpen = ref(false)
 
 const navItems = [
@@ -26,6 +27,53 @@ const isActive = (path: string) => {
   
   return route.path.startsWith(path)
 }
+
+// Fonction pour gérer le scroll smooth vers une section
+const handleNavClick = (path: string, event?: Event) => {
+  if (event) {
+    event.preventDefault()
+  }
+
+  // Si le lien contient une ancre
+  if (path.includes('#')) {
+    const [routePath, hash] = path.split('#')
+    const targetPath = routePath || '/'
+    const targetHash = hash ? `#${hash}` : ''
+
+    // Si on est déjà sur la même page, scroller directement
+    if (route.path === targetPath && hash) {
+      const element = document.getElementById(hash)
+      if (element) {
+        const headerHeight = 80
+        const elementPosition = element.getBoundingClientRect().top + window.pageYOffset
+        const offsetPosition = elementPosition - headerHeight
+
+        window.scrollTo({
+          top: offsetPosition,
+          behavior: 'smooth'
+        })
+        
+        // Mettre à jour l'URL sans recharger
+        router.push({ path: targetPath, hash: targetHash })
+        mobileMenuOpen.value = false
+        return
+      }
+    }
+
+    // Navigation vers une autre page avec hash (le plugin gérera le scroll)
+    if (hash) {
+      router.push({ path: targetPath, hash: targetHash })
+    } else {
+      router.push(targetPath)
+    }
+    mobileMenuOpen.value = false
+    return
+  }
+
+  // Navigation normale sans hash
+  router.push(path)
+  mobileMenuOpen.value = false
+}
 </script>
 
 
@@ -44,13 +92,14 @@ const isActive = (path: string) => {
 
         <!-- Navigation -->
         <nav class="hidden lg:flex space-x-8">
-          <NuxtLink
+          <a
             v-for="item in navItems"
             :key="item.path"
-            :to="item.path"
-            class="nav-link relative py-2 text-sm transition-colors duration-200"
+            :href="item.path"
+            class="nav-link relative py-2 text-sm transition-colors duration-200 cursor-pointer"
             :class="isActive(item.path) ? 'text-primary' : 'text-gray-text hover:text-primary'"
-            >
+            @click="handleNavClick(item.path, $event)"
+          >
             {{ item.name }}
 
             <!-- Blue underline -->
@@ -58,13 +107,16 @@ const isActive = (path: string) => {
               v-if="isActive(item.path)"
               class="absolute bottom-0 left-0 w-full h-1 bg-primary"
             />
-          </NuxtLink>
+          </a>
         </nav>
 
         <!-- Mobile menu button -->
         <button
+          type="button"
           class="lg:hidden p-2 rounded-md text-gray-text hover:text-primary hover:bg-gray-background transition-colors"
+          aria-label="Toggle mobile menu"
           @click="mobileMenuOpen = !mobileMenuOpen"
+          
         >
           <svg
             class="h-6 w-6"
@@ -92,20 +144,20 @@ const isActive = (path: string) => {
 
       <!-- Mobile menu -->
       <div
-        v-show="mobileMenuOpen"
+        v-if="mobileMenuOpen"
         class="lg:hidden py-4 border-t border-gray-background"
       >
         <div class="flex flex-col space-y-4">
-          <NuxtLink
+          <a
             v-for="item in navItems"
             :key="item.path"
-            :to="item.path"
-            class="relative py-2 text-base font-medium transition-colors duration-200"
+            :href="item.path"
+            class="relative py-2 text-base font-medium transition-colors duration-200 cursor-pointer"
             :class="isActive(item.path) ? 'text-primary border-l-4 border-primary pl-4' : 'text-gray-text hover:text-primary pl-4'"
-            @click="mobileMenuOpen = false"
+            @click="handleNavClick(item.path, $event)"
           >
             {{ item.name }}
-          </NuxtLink>
+          </a>
         </div>
       </div>
     </div>
