@@ -1,3 +1,13 @@
+<script setup lang="ts">
+import { useSeo } from '~/composables/useSeo'
+
+useSeo({
+  title: 'Contactez-nous',
+  description: 'Contactez l\'Association Vémianou pour toute question, demande d\'information ou pour participer à nos actions. Nous sommes à votre écoute pour construire ensemble un meilleur avenir au Togo.',
+  keywords: 'contact Association Vémianou, adresse, email, téléphone, Togo, association',
+})
+</script>
+
 <template>
   <div>
     <!-- Hero Section -->

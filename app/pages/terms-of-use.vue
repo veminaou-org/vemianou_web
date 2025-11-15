@@ -1,3 +1,13 @@
+<script setup lang="ts">
+import { useSeo } from '~/composables/useSeo'
+
+useSeo({
+  title: 'Conditions d\'utilisation',
+  description: 'Conditions d\'utilisation du site de l\'Association Vémianou. Découvrez les règles et conditions d\'accès et d\'utilisation de notre site web.',
+  keywords: 'conditions d\'utilisation, Association Vémianou, règles, utilisation site web, mentions légales',
+})
+</script>
+
 <template>
   <div class="bg-white py-16 px-6 md:px-12 lg:px-24">
     <div class="max-w-4xl mx-auto space-y-10">

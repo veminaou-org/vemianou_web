@@ -12,13 +12,13 @@
     { name: 'Politique de confidentialité', path: '/privacy-policy' }
   ]
 
-  const resourcesLinks = [
-    { name: 'Youtube Playlist', path: '#' }
-  ]
+  // const resourcesLinks = [
+  //   { name: 'Youtube Playlist', path: '#' }
+  // ]
 
   const socialLinks = [
     { name: 'Facebook', icon: 'mdi:facebook', path: 'https://www.facebook.com/profile.php?id=100089894883718' },
-    { name: 'YouTube', icon: 'mdi:youtube', path: 'https://youtube.com' }
+    // { name: 'YouTube', icon: 'mdi:youtube', path: 'https://youtube.com' }
   ]
 
 </script>
@@ -90,7 +90,7 @@ v-for="link in socialLinks"
         </div>
 
         <!-- RESSOURCES Column -->
-        <div>
+        <!-- <div>
           <h3 class="text-primary font-bold text-sm uppercase mb-4">
             RESSOURCES
           </h3>
@@ -106,7 +106,7 @@ v-for="link in socialLinks"
               </a>
             </li>
           </ul>
-        </div>
+        </div> -->
       </div>
 
       <!-- Copyright -->
