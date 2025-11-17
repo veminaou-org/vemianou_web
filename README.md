@@ -14,6 +14,7 @@ L'Association Vémianou œuvre pour la promotion de la paix, de l'unité et du v
 - **[Tailwind CSS](https://tailwindcss.com/)** - Framework CSS
 - **[Strapi](https://strapi.io/)** - CMS Headless (via @nuxtjs/strapi)
 - **[Nuxt Icon](https://github.com/nuxt/icon)** - Gestion des icônes
+- **[EmailJS](https://www.emailjs.com/)** - Service d'envoi d'emails depuis le client
 
 ## 📋 Prérequis
 
@@ -42,6 +43,9 @@ L'Association Vémianou œuvre pour la promotion de la paix, de l'unité et du v
    ```env
    NUXT_PUBLIC_STRAPI_URL=https://votre-strapi-url.com
    NUXT_PUBLIC_SITE_URL=https://vemianou.org
+   VITE_EMAILJS_SERVICE_ID=votre_service_id
+   VITE_EMAILJS_TEMPLATE_ID=votre_template_id
+   VITE_EMAILJS_PUBLIC_KEY=votre_public_key
    ```
 
 4. **Démarrer le serveur de développement**
@@ -102,12 +106,28 @@ vemianou/
 |----------|-------------|--------|
 | `NUXT_PUBLIC_STRAPI_URL` | URL de l'instance Strapi | `https://localhost:1337` |
 | `NUXT_PUBLIC_SITE_URL` | URL du site en production | `https://vemianou.org` |
+| `VITE_EMAILJS_SERVICE_ID` | ID du service EmailJS | - |
+| `VITE_EMAILJS_TEMPLATE_ID` | ID du template EmailJS | - |
+| `VITE_EMAILJS_PUBLIC_KEY` | Clé publique EmailJS | - |
 
 ### Configuration Strapi
 
 Le projet est configuré pour utiliser Strapi v4. Assurez-vous que votre instance Strapi expose les collections suivantes :
 - `articles` - Articles de blog
 - `galleries` - Images de la galerie
+
+### Configuration EmailJS
+
+L'envoi de messages depuis le formulaire de contact est géré via **EmailJS**, un service qui permet d'envoyer des emails directement depuis le client sans nécessiter de backend. 
+
+Pour configurer EmailJS :
+1. Créez un compte sur [EmailJS](https://www.emailjs.com/)
+2. Configurez un service email (Gmail, Outlook, etc.)
+3. Créez un template d'email avec les variables suivantes : `{{nom}}`, `{{prenom}}`, `{{email}}`, `{{telephone}}`, `{{objet}}`, `{{message}}`
+4. Récupérez votre Service ID, Template ID et Public Key depuis le dashboard EmailJS
+5. Ajoutez ces valeurs dans votre fichier `.env`
+
+Le formulaire de contact envoie automatiquement les données au template EmailJS configuré et affiche un modal de confirmation (succès ou erreur) à l'utilisateur.
 
 ## 🎨 Fonctionnalités
 
@@ -122,7 +142,7 @@ Le projet est configuré pour utiliser Strapi v4. Assurez-vous que votre instanc
 - 🏠 **Accueil** - Présentation de l'association
 - 📰 **Articles** - Blog avec articles dynamiques
 - 📸 **Galerie** - Galerie photo des activités
-- 📧 **Contact** - Formulaire de contact
+- 📧 **Contact** - Formulaire de contact avec envoi d'emails via EmailJS
 - 📄 **Pages légales** - Politique de confidentialité, Conditions d'utilisation
 
 ### Composants
