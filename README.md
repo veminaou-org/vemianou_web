@@ -1,75 +1,204 @@
-# Nuxt Minimal Starter
+# Association Vémianou - Site Web
 
-Look at the [Nuxt documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.
+Site web officiel de l'Association Vémianou, une organisation togolaise engagée pour la paix, l'unité et le vivre-ensemble au Togo.
 
-## Setup
+## 🎯 À propos
 
-Make sure to install dependencies:
+L'Association Vémianou œuvre pour la promotion de la paix, de l'unité et du vivre-ensemble au Togo. À travers des actions de sensibilisation, d'éducation et de solidarité, elle s'engage à renforcer les liens entre les citoyens et à bâtir une société plus apaisée.
+
+## 🛠️ Technologies
+
+- **[Nuxt 4](https://nuxt.com/)** - Framework Vue.js
+- **[Vue 3](https://vuejs.org/)** - Framework JavaScript
+- **[TypeScript](https://www.typescriptlang.org/)** - Typage statique
+- **[Tailwind CSS](https://tailwindcss.com/)** - Framework CSS
+- **[Strapi](https://strapi.io/)** - CMS Headless (via @nuxtjs/strapi)
+- **[Nuxt Icon](https://github.com/nuxt/icon)** - Gestion des icônes
+- **[EmailJS](https://www.emailjs.com/)** - Service d'envoi d'emails depuis le client
+
+## 📋 Prérequis
+
+- Node.js 18+ ou supérieur
+- pnpm (recommandé), npm, yarn ou bun
+- Accès à une instance Strapi pour le contenu
+
+## 🚀 Installation
+
+1. **Cloner le repository**
+   ```bash
+   git clone <repository-url>
+   cd vemianou
+   ```
+
+2. **Installer les dépendances**
+   ```bash
+   pnpm install
+   # ou
+   npm install
+   ```
+
+3. **Configurer les variables d'environnement**
+   
+   Créez un fichier `.env` à la racine du projet :
+   ```env
+   NUXT_PUBLIC_STRAPI_URL=https://votre-strapi-url.com
+   NUXT_PUBLIC_SITE_URL=https://vemianou.org
+   VITE_EMAILJS_SERVICE_ID=votre_service_id
+   VITE_EMAILJS_TEMPLATE_ID=votre_template_id
+   VITE_EMAILJS_PUBLIC_KEY=votre_public_key
+   ```
+
+4. **Démarrer le serveur de développement**
+   ```bash
+   pnpm dev
+   # ou
+   npm run dev
+   ```
+
+   Le site sera accessible sur `http://localhost:3000`
+
+## 📜 Scripts disponibles
 
 ```bash
-# npm
-npm install
+# Développement
+pnpm dev              # Démarrer le serveur de développement
 
-# pnpm
-pnpm install
+# Production
+pnpm build            # Construire l'application pour la production
+pnpm generate         # Générer une version statique
+pnpm preview          # Prévisualiser la build de production
 
-# yarn
-yarn install
-
-# bun
-bun install
+# Qualité de code
+pnpm lint             # Vérifier le code avec ESLint
+pnpm lint:fix         # Corriger automatiquement les erreurs ESLint
 ```
 
-## Development Server
+## 📁 Structure du projet
 
-Start the development server on `http://localhost:3000`:
-
-```bash
-# npm
-npm run dev
-
-# pnpm
-pnpm dev
-
-# yarn
-yarn dev
-
-# bun
-bun run dev
+```
+vemianou/
+├── app/
+│   ├── assets/          # Assets statiques (CSS, images)
+│   ├── components/      # Composants Vue réutilisables
+│   │   ├── articles/    # Composants liés aux articles
+│   │   ├── contact/     # Composants de contact
+│   │   ├── gallery/     # Composants de galerie
+│   │   ├── landing/     # Composants de la page d'accueil
+│   │   └── shared/      # Composants partagés (Header, Footer)
+│   ├── composables/     # Composable Vue (useSeo, etc.)
+│   ├── layouts/         # Layouts de pages
+│   ├── pages/           # Pages de l'application
+│   ├── plugins/         # Plugins Nuxt
+│   └── types/           # Types TypeScript
+├── public/              # Fichiers publics (images, robots.txt)
+├── server/              # Routes serveur (API, sitemap)
+│   └── routes/          # Routes API
+├── nuxt.config.ts       # Configuration Nuxt
+├── tailwind.config.js   # Configuration Tailwind
+└── tsconfig.json        # Configuration TypeScript
 ```
 
-## Production
+## ⚙️ Configuration
 
-Build the application for production:
+### Variables d'environnement
+
+| Variable | Description | Défaut |
+|----------|-------------|--------|
+| `NUXT_PUBLIC_STRAPI_URL` | URL de l'instance Strapi | `https://localhost:1337` |
+| `NUXT_PUBLIC_SITE_URL` | URL du site en production | `https://vemianou.org` |
+| `VITE_EMAILJS_SERVICE_ID` | ID du service EmailJS | - |
+| `VITE_EMAILJS_TEMPLATE_ID` | ID du template EmailJS | - |
+| `VITE_EMAILJS_PUBLIC_KEY` | Clé publique EmailJS | - |
+
+### Configuration Strapi
+
+Le projet est configuré pour utiliser Strapi v4. Assurez-vous que votre instance Strapi expose les collections suivantes :
+- `articles` - Articles de blog
+- `galleries` - Images de la galerie
+
+### Configuration EmailJS
+
+L'envoi de messages depuis le formulaire de contact est géré via **EmailJS**, un service qui permet d'envoyer des emails directement depuis le client sans nécessiter de backend. 
+
+Pour configurer EmailJS :
+1. Créez un compte sur [EmailJS](https://www.emailjs.com/)
+2. Configurez un service email (Gmail, Outlook, etc.)
+3. Créez un template d'email avec les variables suivantes : `{{nom}}`, `{{prenom}}`, `{{email}}`, `{{telephone}}`, `{{objet}}`, `{{message}}`
+4. Récupérez votre Service ID, Template ID et Public Key depuis le dashboard EmailJS
+5. Ajoutez ces valeurs dans votre fichier `.env`
+
+Le formulaire de contact envoie automatiquement les données au template EmailJS configuré et affiche un modal de confirmation (succès ou erreur) à l'utilisateur.
+
+## 🎨 Fonctionnalités
+
+### SEO
+- ✅ Meta tags optimisés (Open Graph, Twitter Cards)
+- ✅ Données structurées JSON-LD (Schema.org)
+- ✅ Sitemap XML dynamique
+- ✅ Robots.txt configuré
+- ✅ URLs canoniques
+
+### Pages
+- 🏠 **Accueil** - Présentation de l'association
+- 📰 **Articles** - Blog avec articles dynamiques
+- 📸 **Galerie** - Galerie photo des activités
+- 📧 **Contact** - Formulaire de contact avec envoi d'emails via EmailJS
+- 📄 **Pages légales** - Politique de confidentialité, Conditions d'utilisation
+
+### Composants
+- Navigation responsive avec menu mobile
+- Hero section avec carrousel d'images
+- Cartes d'articles avec formatage de dates
+- Formulaire de contact
+- Footer avec liens et réseaux sociaux
+
+## 🔍 SEO
+
+Le site est optimisé pour le référencement avec :
+- Meta tags sur toutes les pages
+- Données structurées (Organization, WebSite, Article)
+- Sitemap dynamique généré automatiquement
+- Support Open Graph et Twitter Cards
+
+Consultez `SEO-VERIFICATION.md` pour un guide complet de vérification SEO.
+
+## 🚢 Déploiement
+
+### Build de production
 
 ```bash
-# npm
-npm run build
-
-# pnpm
 pnpm build
-
-# yarn
-yarn build
-
-# bun
-bun run build
 ```
 
-Locally preview production build:
+### Génération statique
 
 ```bash
-# npm
-npm run preview
-
-# pnpm
-pnpm preview
-
-# yarn
-yarn preview
-
-# bun
-bun run preview
+pnpm generate
 ```
 
-Check out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.
+### Prévisualisation locale
+
+```bash
+pnpm preview
+```
+
+Pour plus d'informations sur le déploiement, consultez la [documentation Nuxt](https://nuxt.com/docs/getting-started/deployment).
+
+## 📝 Contribution
+
+1. Créer une branche pour votre fonctionnalité (`git checkout -b feature/ma-fonctionnalite`)
+2. Commiter vos changements (`git commit -m 'Ajout de ma fonctionnalité'`)
+3. Pousser vers la branche (`git push origin feature/ma-fonctionnalite`)
+4. Ouvrir une Pull Request
+
+## 📄 Licence
+
+Ce projet est privé et propriété de l'Association Vémianou.
+
+## 📞 Contact
+
+Pour toute question ou demande d'information, contactez l'Association Vémianou via le formulaire de contact sur le site.
+
+---
+
+**Association Vémianou** - Pour un meilleur avenir

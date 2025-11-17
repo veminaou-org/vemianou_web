@@ -1,3 +1,13 @@
+<script setup lang="ts">
+import { useSeo } from '~/composables/useSeo'
+
+useSeo({
+  title: 'Politique de confidentialité',
+  description: 'Politique de confidentialité de l\'Association Vémianou. Découvrez comment nous collectons, utilisons et protégeons vos données personnelles conformément au RGPD.',
+  keywords: 'politique de confidentialité, RGPD, protection des données, Association Vémianou, vie privée',
+})
+</script>
+
 <template>
   <div class="bg-white py-16 px-6 md:px-12 lg:px-24">
     <div class="max-w-4xl mx-auto space-y-10">

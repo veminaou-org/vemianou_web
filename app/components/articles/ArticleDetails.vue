@@ -137,16 +137,16 @@ const description = computed(() => article.value?.description ?? '')
         </article>
 
         <aside class="space-y-8">
-          <div class="p-6">
-            <h2 class="text-xl font-semibold text-gray-900 mb-6">Plus d’articles</h2>
+          <div class="p-6 text-center md:text-left">
+            <h2 class="text-xl font-semibold text-gray-900 mb-6">Plus d'articles</h2>
 
             <ul class="space-y-5">
               <li v-for="related in relatedArticles" :key="related.id">
                 <NuxtLink
                   :to="`/articles/${related.slug}`"
-                  class="flex items-center gap-4 group"
+                  class="flex items-center gap-4 group justify-center md:justify-start"
                 >
-                  <div class="flex-shrink-0 flex flex-col gap-2 overflow-hidden">
+                  <div class="flex-shrink-0 flex flex-col gap-2 overflow-hidden items-center md:items-start">
                     <img
                       v-if="related.cover?.url"
                       :src="related.cover.url"

@@ -1,9 +1,24 @@
 <script setup lang="ts">
 import type { Article } from '~/types';
+import { computed } from 'vue'
 
-defineProps<{
+const props = defineProps<{
   article: Article
 }>()
+
+const formattedDate = computed(() => {
+  if (!props.article.publishedAt && !props.article.createdAt) {
+    return ''
+  }
+
+  const dateToFormat = props.article.publishedAt || props.article.createdAt
+  
+  return new Intl.DateTimeFormat('fr-FR', {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+  }).format(new Date(dateToFormat))
+})
 </script>
 
 <template>
@@ -21,7 +36,7 @@ defineProps<{
         <div class="py-6">
             <!-- Author and Date -->
             <p class="text-primary text-sm mb-3">
-                {{ article.author }} - {{ article.createdAt }}
+                {{ article.author }} - {{ formattedDate }}
             </p>
 
             <!-- Title -->
@@ -37,7 +52,7 @@ defineProps<{
             <!-- Read More Button -->
             <NuxtLink 
                 :to="`/articles/${article.slug}`"
-                class="inline-flex items-center gap-2 bg-primary/30 rounded-full px-4 py-2 text-primary font-semibold text-sm hover:scale-110 transition-transform duration-200"
+                class="inline-flex items-center gap-2 bg-primary/30 rounded-full px-3 py-2 text-primary font-semibold text-sm hover:scale-110 transition-transform duration-200 ml-1"
                 >
                 Lire plus
                 <Icon name="mdi:chevron-right" class="w-5 h-5" />

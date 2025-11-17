@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import { ref } from 'vue'
+import { useEmail } from '~/composables/useEmail'
 
+const { sendMail } = useEmail()
 const form = ref({
   nom: '',
   prenom: '',
@@ -11,28 +13,43 @@ const form = ref({
 })
 
 const isSubmitting = ref(false)
+const showModal = ref(false)
+const modalType = ref<'success' | 'error'>('success')
+const modalMessage = ref('')
 
 const handleSubmit = async () => {
   isSubmitting.value = true
-  
-  // Simulation d'envoi
-  await new Promise(resolve => setTimeout(resolve, 1000))
-  
-  console.log('Formulaire soumis:', form.value)
-  
-  // Réinitialiser le formulaire
-  form.value = {
-    nom: '',
-    prenom: '',
-    email: '',
-    telephone: '',
-    objet: '',
-    message: ''
+
+  try {
+    await sendMail(form.value)
+
+    modalType.value = 'success'
+    modalMessage.value = 'Message envoyé avec succès !'
+    showModal.value = true
+
+    // Reset
+    form.value = {
+      nom: '',
+      prenom: '',
+      email: '',
+      telephone: '',
+      objet: '',
+      message: ''
+    }
+  } catch (error) {
+    console.error(error)
+    modalType.value = 'error'
+    modalMessage.value = "Erreur lors de l'envoi du message. Veuillez réessayer."
+    showModal.value = true
   }
-  
+
   isSubmitting.value = false
-  alert('Message envoyé avec succès !')
 }
+
+const closeModal = () => {
+  showModal.value = false
+}
+
 </script>
 
 <template>
@@ -111,5 +128,13 @@ const handleSubmit = async () => {
       {{ isSubmitting ? 'Envoi en cours...' : 'Envoyer le message' }}
     </button>
   </form>
+
+  <!-- Notification Modal -->
+  <NotificationModal
+    :show="showModal"
+    :type="modalType"
+    :message="modalMessage"
+    @close="closeModal"
+  />
 </template>
 
